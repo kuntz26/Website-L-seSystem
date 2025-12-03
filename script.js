@@ -56,3 +56,74 @@ function changeEmail() {
 
     // Her opdaterer du email i databasen eller API
 }
+// DIN BACKEND URL
+const backendUrl = "http://localhost:5242";
+
+// Check om backend er tilgængelig
+async function callBackend(endpoint, data) {
+    try {
+        const response = await fetch(`${backendUrl}${endpoint}`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data)
+        });
+
+        if (!response.ok) throw new Error("Backend returned an error");
+
+        return await response.json();
+    }
+    catch (e) {
+        console.log("Backend ikke tilgængelig → GitHub fallback aktiveret");
+        return null;
+    }
+}
+
+// SEND 2FA KODE
+async function send2FA() {
+    const mail = document.getElementById("emailSelect").value;
+
+    const result = await callBackend("/api/send", { email: mail });
+
+    if (result) {
+        alert("RIGTIG 2FA kode sendt til " + mail);
+        showCodePopup();
+    } else {
+        alert("Backend offline (GitHub-mode): Kode er: 123456");
+        fakeCode = "123456";
+        showCodePopup();
+    }
+}
+
+// VERIFICER 2FA KODE
+let fakeCode = null;
+
+async function verify2FA() {
+    const mail = document.getElementById("emailSelect").value;
+    const code = document.getElementById("codeInput").value;
+
+    // Først prøver vi backend
+    const result = await callBackend("/api/verify", { email: mail, code: code });
+
+    if (result) {
+        alert("Kode korrekt! (RIGTIG backend)");
+        closeCodePopup();
+        return;
+    }
+
+    // GitHub fallback
+    if (fakeCode && code === fakeCode) {
+        alert("Kode korrekt! (GITHUB mode)");
+        closeCodePopup();
+    } else {
+        alert("Forkert kode!");
+    }
+}
+
+// Popup kontrol
+function showCodePopup() {
+    document.getElementById("codePopup").style.display = "flex";
+}
+
+function closeCodePopup() {
+    document.getElementById("codePopup").style.display = "none";
+}
