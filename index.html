@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Låse System Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Top status bar -->
+    <header id="statusBar">
+        Dørstatus: <span id="doorState">Indlæser…</span>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+        <a href="#dashboard">Dashboard</a>
+        <a href="#doors">Døre</a>
+        <a href="#account">Konto & 2FA</a>
+    </nav>
+
+    <!-- Dashboard -->
+    <section id="dashboard" class="page">
+        <h2>Kontrolpanel</h2>
+        <button id="lockBtn" onclick="toggleLock()">Indlæser…</button>
+    </section>
+
+    <!-- Door selection -->
+    <section id="doors" class="page">
+        <h2>Døre</h2>
+        <select id="doorSelect" onchange="changeDoor()">
+            <!-- Tilføjes i JavaScript -->
+        </select>
+    </section>
+
+    <!-- Email selection -->
+    <section id="account" class="page">
+        <h2>2-Factor Indstillinger</h2>
+        <label for="emailSelect">Vælg mail til 2FA:</label>
+        <select id="emailSelect" onchange="changeEmail()">
+            <option>test@example.com</option>
+            <option>bruger2@example.com</option>
+        </select>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>

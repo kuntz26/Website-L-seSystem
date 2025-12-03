@@ -1,0 +1,50 @@
+body {
+	margin: 0;
+	font-family: Arial, sans-serif;
+	background: #f3f3f3;
+}
+
+header {
+	background: #222;
+	color: #fff;
+	padding: 10px;
+	font-size: 20px;
+	text-align: center;
+}
+
+nav {
+	display: flex;
+	justify-content: center;
+	background: #444;
+}
+
+	nav a {
+		color: white;
+		padding: 10px 20px;
+		text-decoration: none;
+	}
+
+		nav a:hover {
+			background: #666;
+		}
+
+.page {
+	padding: 20px;
+}
+
+button {
+	padding: 15px 25px;
+	background: #0077cc;
+	color: white;
+	border: none;
+	font-size: 18px;
+	border-radius: 8px;
+}
+
+	button.unlocked {
+		background: #cc0000;
+	}
+
+	button.locked {
+		background: #00aa44;
+	}
